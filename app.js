@@ -1,0 +1,77 @@
+
+const express = require("express");
+const multer = require("multer");
+const path = require("path");
+const ExcelJS = require("exceljs");
+const nodemailer = require("nodemailer");
+const fs = require("fs");
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(express.static("public"));
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage });
+
+app.post("/submit", upload.single("attachment"), async (req, res) => {
+  const { name, phone, country, product, weight, description } = req.body;
+  const file = req.file;
+
+  // ساخت فایل اکسل
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet("Order");
+
+  worksheet.columns = [
+    { header: "Field", key: "field" },
+    { header: "Value", key: "value" }
+  ];
+
+  worksheet.addRow({ field: "Name", value: name });
+  worksheet.addRow({ field: "Phone", value: phone });
+  worksheet.addRow({ field: "Country", value: country });
+  worksheet.addRow({ field: "Product", value: product });
+  worksheet.addRow({ field: "Weight", value: weight });
+  worksheet.addRow({ field: "Description", value: description });
+
+  const excelPath = "uploads/order-" + Date.now() + ".xlsx";
+  await workbook.xlsx.writeFile(excelPath);
+
+  // ارسال ایمیل
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: process.env.EMAIL_TO,
+    subject: "New Order Received",
+    text: "Please find the attached order file.",
+    attachments: [
+      { filename: "order.xlsx", path: excelPath },
+      file ? { filename: file.originalname, path: file.path } : null
+    ].filter(Boolean)
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.send("Order submitted and emailed successfully!");
+  } catch (err) {
+    res.status(500).send("Email failed: " + err.message);
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
