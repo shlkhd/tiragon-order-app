@@ -9,7 +9,6 @@ const fs = require("fs");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// اطمینان از وجود پوشه uploads
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
@@ -52,9 +51,8 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.soheildaad@gmail.com,
-        pass: process.env.orps izxb anuc ynje
-        
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     });
 
