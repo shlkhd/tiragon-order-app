@@ -2,20 +2,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Order Form</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tiragon Order Form</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h2>Order Form</h2>
-  <form action="/submit" method="POST" enctype="multipart/form-data">
-    <input type="text" name="name" placeholder="Customer Name" required><br>
-    <input type="text" name="phone" placeholder="Phone / WhatsApp" required><br>
-    <input type="text" name="country" placeholder="Country / City"><br>
-    <input type="text" name="product" placeholder="Product Type"><br>
-    <input type="number" name="weight" placeholder="Weight / Quantity"><br>
-    <textarea name="description" placeholder="Additional Details"></textarea><br>
-    <input type="file" name="attachment"><br>
-    <button type="submit">Submit Order</button>
-  </form>
+<body class="bg-gray-100 font-sans">
+  <div class="max-w-2xl mx-auto p-6 bg-white shadow-lg mt-10 rounded-xl">
+    <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Order Submission Form</h1>
+    <form action="/submit" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <div>
+        <label class="block text-gray-700">Full Name</label>
+        <input type="text" name="name" required class="w-full border border-gray-300 rounded p-2" />
+      </div>
+      <div>
+        <label class="block text-gray-700">Phone / WhatsApp</label>
+        <input type="text" name="phone" required class="w-full border border-gray-300 rounded p-2" />
+      </div>
+      <div>
+        <label class="block text-gray-700">Country / City</label>
+        <input type="text" name="country" class="w-full border border-gray-300 rounded p-2" />
+      </div>
+      <div>
+        <label class="block text-gray-700">Product Type</label>
+        <input type="text" name="product" class="w-full border border-gray-300 rounded p-2" />
+      </div>
+      <div>
+        <label class="block text-gray-700">Weight / Quantity</label>
+        <input type="number" name="weight" class="w-full border border-gray-300 rounded p-2" />
+      </div>
+      <div>
+        <label class="block text-gray-700">Additional Description</label>
+        <textarea name="description" rows="4" class="w-full border border-gray-300 rounded p-2"></textarea>
+      </div>
+      <div>
+        <label class="block text-gray-700">Upload File (Catalog / Image)</label>
+        <input type="file" name="attachment" class="w-full" />
+      </div>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+        Submit Order
+      </button>
+    </form>
+    <div class="text-center mt-6">
+      <a href="https://wa.me/" target="_blank" class="inline-block bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600">
+        Contact via WhatsApp
+      </a>
+    </div>
+  </div>
 </body>
 </html>
