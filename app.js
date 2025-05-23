@@ -72,6 +72,7 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
     await transporter.sendMail(mailOptions);
     res.send("Order submitted and emailed successfully!");
   } catch (err) {
+    console.error("Email error:", err);
     res.status(500).send("Email failed: " + err.message);
   }
 });
