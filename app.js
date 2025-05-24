@@ -9,10 +9,12 @@ const fs = require("fs");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// اطمینان از وجود پوشه uploads
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 const storage = multer.diskStorage({
@@ -41,9 +43,23 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
     worksheet.addRow({ field: "Name", value: name });
     worksheet.addRow({ field: "Phone", value: phone });
     worksheet.addRow({ field: "Country", value: country });
-    worksheet.addRow({ field: "Product", value: product });
-    worksheet.addRow({ field: "Weight", value: weight });
-    worksheet.addRow({ field: "Description", value: description });
+    worksheet.addRow({ field: "", value: "" });
+    worksheet.addRow({ field: "Products", value: "" });
+
+    // پشتیبانی از چند محصول
+    if (Array.isArray(product)) {
+      for (let i = 0; i < product.length; i++) {
+        worksheet.addRow({
+          field: `Product ${i + 1}`,
+          value: `${product[i]} - ${weight[i]} - ${description[i]}`
+        });
+      }
+    } else {
+      worksheet.addRow({
+        field: "Product 1",
+        value: `${product} - ${weight} - ${description}`
+      });
+    }
 
     const excelPath = "uploads/order-" + Date.now() + ".xlsx";
     await workbook.xlsx.writeFile(excelPath);
