@@ -48,13 +48,13 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
       for (let i = 0; i < product.length; i++) {
         worksheet.addRow({
           field: Product ${i + 1},
-          value: ${product[i]} - ${weight[i]} - ${description[i]}
+          value: \\${product[i]} - \${weight[i]} - \${description[i]}\
         });
       }
     } else {
       worksheet.addRow({
         field: "Product 1",
-        value: ${product} - ${weight} - ${description}
+        value: \\${product} - \${weight} - \${description}\
       });
     }
 
@@ -64,8 +64,8 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-         user: process.env.EMAIL_USER,
-         pass: process.env.EMAIL_PASS
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     });
 
@@ -91,3 +91,4 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
 app.listen(PORT, () => {
   console.log(✅ Server running at http://localhost:${PORT});
 });
+tiragon-order-app/app.js at main · shlkhd/tiragon-order-app
