@@ -1,0 +1,14 @@
+{
+  "title": "订单提交表单",
+  "name": "全名",
+  "phone": "电话 / 微信",
+  "country": "国家 / 城市",
+  "upload": "上传文件（目录 / 图片）",
+  "submit": "提交订单",
+  "addProduct": "+ 添加产品",
+  "product": "产品",
+  "productType": "产品类型",
+  "weight": "重量 / 数量",
+  "description": "描述",
+  "whatsapp": "通过 WhatsApp 联系"
+}
