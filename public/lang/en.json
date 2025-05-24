@@ -1,0 +1,14 @@
+{
+  "title": "Order Submission Form",
+  "name": "Full Name",
+  "phone": "Phone / WhatsApp",
+  "country": "Country / City",
+  "upload": "Upload File (Catalog / Image)",
+  "submit": "Submit Order",
+  "addProduct": "+ Add Product",
+  "product": "Product",
+  "productType": "Product Type",
+  "weight": "Weight / Quantity",
+  "description": "Description",
+  "whatsapp": "Contact via WhatsApp"
+}
