@@ -49,13 +49,13 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
       for (let i = 0; i < product.length; i++) {
         worksheet.addRow({
           field: `Product ${i + 1}`,
-          value: \`\${product[i]} - \${weight[i]} - \${description[i]}\`
+          value: `${product[i]} - ${weight[i]} - ${description[i]}`
         });
       }
     } else {
       worksheet.addRow({
         field: "Product 1",
-        value: \`\${product} - \${weight} - \${description}\`
+        value: `${product} - ${weight} - ${description}`
       });
     }
 
