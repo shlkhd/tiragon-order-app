@@ -10,39 +10,24 @@
 <body class="bg-gray-100 font-sans">
   <div class="max-w-3xl mx-auto p-6 bg-white shadow-xl mt-10 rounded-xl">
     <div class="text-center mb-6">
-      <img src="https://via.placeholder.com/200x60?text=Tiragon+Logo" alt="Tiragon Logo" class="mx-auto h-16" />
+      <img src="logo.png" alt="Tiragon Logo" class="mx-auto h-20" />
       <h1 class="text-2xl font-bold text-gray-800 mt-2">Order Submission Form</h1>
     </div>
+
     <form action="/submit" method="POST" enctype="multipart/form-data" class="space-y-4">
-      <div>
-        <label class="block text-gray-700">Full Name</label>
-        <input type="text" name="name" required class="w-full border border-gray-300 rounded p-2" />
-      </div>
-      <div>
-        <label class="block text-gray-700">Phone / WhatsApp</label>
-        <input type="text" name="phone" required class="w-full border border-gray-300 rounded p-2" />
-      </div>
-      <div>
-        <label class="block text-gray-700">Country / City</label>
-        <input type="text" name="country" class="w-full border border-gray-300 rounded p-2" />
-      </div>
+      <div><label class="block text-gray-700">Full Name</label><input type="text" name="name" required class="w-full border border-gray-300 rounded p-2" /></div>
+      <div><label class="block text-gray-700">Phone / WhatsApp</label><input type="text" name="phone" required class="w-full border border-gray-300 rounded p-2" /></div>
+      <div><label class="block text-gray-700">Country / City</label><input type="text" name="country" class="w-full border border-gray-300 rounded p-2" /></div>
 
       <div id="products"></div>
-      <button type="button" onclick="addProductFields()" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mb-4">
-        + Add Product
-      </button>
+      <button type="button" onclick="addProductFields()" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mb-4">+ Add Product</button>
 
-      <div>
-        <label class="block text-gray-700">Upload File (Catalog / Image)</label>
-        <input type="file" name="attachment" class="w-full" />
-      </div>
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-        Submit Order
-      </button>
+      <div><label class="block text-gray-700">Upload File (Catalog / Image)</label><input type="file" name="attachment" class="w-full" /></div>
+      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">Submit Order</button>
     </form>
+
     <div class="text-center mt-6">
-      <a href="https://wa.me/971557068949" target="_blank"
-         class="inline-block bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600">
+      <a href="https://wa.me/971557068949" target="_blank" class="inline-block bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600">
         Contact via WhatsApp
       </a>
     </div>
