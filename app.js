@@ -1,3 +1,4 @@
+
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
@@ -48,13 +49,13 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
       for (let i = 0; i < product.length; i++) {
         worksheet.addRow({
           field: `Product ${i + 1}`,
-          value: `${product[i]} - ${weight[i]} - ${description[i]}`
+          value: \`\${product[i]} - \${weight[i]} - \${description[i]}\`
         });
       }
     } else {
       worksheet.addRow({
         field: "Product 1",
-        value: `${product} - ${weight} - ${description}`
+        value: \`\${product} - \${weight} - \${description}\`
       });
     }
 
@@ -64,8 +65,8 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     });
 
