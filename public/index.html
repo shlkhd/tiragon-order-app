@@ -4,17 +4,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Multi-Product Order Form</title>
+  <title>Tiragon Order Form</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     function addProductFields() {
       const container = document.getElementById('products');
       const index = container.children.length;
       const div = document.createElement('div');
-      div.className = "border border-gray-300 p-4 rounded mb-4";
+      div.className = "border border-gray-300 p-4 rounded mb-4 bg-gray-50";
 
       div.innerHTML = `
-        <h4 class="font-semibold mb-2">Product ${index + 1}</h4>
+        <h4 class="font-semibold mb-2">Product $${index + 1}</h4>
         <label class="block text-gray-700">Product Type</label>
         <input type="text" name="product[]" class="w-full border border-gray-300 rounded p-2 mb-2" />
         <label class="block text-gray-700">Weight / Quantity</label>
@@ -27,8 +27,11 @@
   </script>
 </head>
 <body class="bg-gray-100 font-sans">
-  <div class="max-w-2xl mx-auto p-6 bg-white shadow-lg mt-10 rounded-xl">
-    <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Order Submission Form</h1>
+  <div class="max-w-3xl mx-auto p-6 bg-white shadow-xl mt-10 rounded-xl">
+    <div class="text-center mb-6">
+      <img src="https://via.placeholder.com/200x60?text=Tiragon+Logo" alt="Tiragon Logo" class="mx-auto h-16" />
+      <h1 class="text-2xl font-bold text-gray-800 mt-2">Order Submission Form</h1>
+    </div>
     <form action="/submit" method="POST" enctype="multipart/form-data" class="space-y-4">
       <div>
         <label class="block text-gray-700">Full Name</label>
@@ -56,6 +59,12 @@
         Submit Order
       </button>
     </form>
+    <div class="text-center mt-6">
+      <a href="https://wa.me/971557068949" target="_blank"
+         class="inline-block bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600">
+        Contact via WhatsApp
+      </a>
+    </div>
   </div>
 </body>
 </html>
