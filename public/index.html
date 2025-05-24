@@ -20,17 +20,17 @@
       </select>
     </div>
 
-    <form id="order-form" class="space-y-4">
-      <div><label id="label-name" class="block">Full Name</label><input class="w-full border border-gray-300 rounded p-2" /></div>
-      <div><label id="label-phone" class="block">Phone</label><input class="w-full border border-gray-300 rounded p-2" /></div>
-      <div><label id="label-country" class="block">Country</label><input class="w-full border border-gray-300 rounded p-2" /></div>
+    <form id="order-form" action="/submit" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <div><label id="label-name" class="block">Full Name</label><input name="name" class="w-full border border-gray-300 rounded p-2" required /></div>
+      <div><label id="label-phone" class="block">Phone</label><input name="phone" class="w-full border border-gray-300 rounded p-2" required /></div>
+      <div><label id="label-country" class="block">Country</label><input name="country" class="w-full border border-gray-300 rounded p-2" required /></div>
 
       <div id="products"></div>
       <button type="button" id="addProduct" onclick="addProductFields()" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
         + Add Product
       </button>
 
-      <div><label id="label-upload" class="block">Upload File</label><input type="file" class="w-full" /></div>
+      <div><label id="label-upload" class="block">Upload File</label><input type="file" name="attachment" class="w-full" /></div>
       <button id="submit" type="submit" class="w-full bg-blue-600 text-white py-2 rounded">Submit Order</button>
     </form>
 
@@ -51,12 +51,12 @@ async function loadLang(lang) {
 
 function applyLang(lang) {
   const t = translations[lang];
-  document.getElementById("title").textContent = t.title_order;
+  document.getElementById("title").textContent = t.title_order || t.title;
   document.getElementById("label-name").textContent = t.name;
   document.getElementById("label-phone").textContent = t.phone;
   document.getElementById("label-country").textContent = t.country;
   document.getElementById("label-upload").textContent = t.upload;
-  document.getElementById("submit").textContent = t.submit_order;
+  document.getElementById("submit").textContent = t.submit_order || t.submit;
   document.getElementById("addProduct").textContent = t.addProduct;
   document.getElementById("whatsapp").textContent = t.whatsapp;
 
@@ -94,6 +94,7 @@ document.getElementById("language").addEventListener("change", e => {
 });
 
 loadLang("en");
+addProductFields(); // add at least one by default
 </script>
 </body>
 </html>
