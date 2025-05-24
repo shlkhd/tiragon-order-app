@@ -8,12 +8,10 @@ const fs = require("fs");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// اطمینان از وجود پوشه uploads
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
 
-// خواندن اطلاعات فرم
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -46,7 +44,6 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
     worksheet.addRow({ field: "", value: "" });
     worksheet.addRow({ field: "Products", value: "" });
 
-    // چندمحصولی
     if (Array.isArray(product)) {
       for (let i = 0; i < product.length; i++) {
         worksheet.addRow({
@@ -67,8 +64,8 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-             user: process.env.soheildaad@gmail.com,
-        pass: process.env.orps izxb anuc ynje
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     });
 
