@@ -3,82 +3,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>Tiragon Order</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tiragon Order Form</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
   <div class="max-w-3xl mx-auto p-6 bg-white shadow-xl mt-10 rounded-xl">
-    <div class="text-center mb-6">
-      <img src="logo.png" alt="Tiragon Logo" class="mx-auto h-20" />
-      <h1 class="text-2xl font-bold text-gray-800 mt-2">Order Submission Form</h1>
+    <div class="flex justify-between items-center mb-6">
+      <h1 id="title" class="text-2xl font-bold text-gray-800">Order Submission Form</h1>
+      <select id="language" class="border border-gray-300 rounded p-2">
+        <option value="en">English</option>
+        <option value="fa">فارسی</option>
+      </select>
     </div>
 
-    <form action="/submit" method="POST" enctype="multipart/form-data" class="space-y-4">
-      <div><label class="block text-gray-700">Full Name</label><input type="text" name="name" required class="w-full border border-gray-300 rounded p-2" /></div>
-      <div><label class="block text-gray-700">Phone / WhatsApp</label><input type="text" name="phone" required class="w-full border border-gray-300 rounded p-2" /></div>
-      <div><label class="block text-gray-700">Country / City</label><input type="text" name="country" class="w-full border border-gray-300 rounded p-2" /></div>
-
-      <div id="products"></div>
-      <button type="button" onclick="addProductFields()" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mb-4">+ Add Product</button>
-
-      <div><label class="block text-gray-700">Upload File (Catalog / Image)</label><input type="file" name="attachment" class="w-full" /></div>
-      <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">Submit Order</button>
+    <form class="space-y-4">
+      <div><label id="label-name" class="block text-gray-700">Full Name</label><input class="w-full border border-gray-300 rounded p-2" /></div>
+      <div><label id="label-phone" class="block text-gray-700">Phone / WhatsApp</label><input class="w-full border border-gray-300 rounded p-2" /></div>
+      <div><label id="label-country" class="block text-gray-700">Country / City</label><input class="w-full border border-gray-300 rounded p-2" /></div>
+      <div><label id="label-upload" class="block text-gray-700">Upload File</label><input type="file" class="w-full" /></div>
+      <button id="submit" type="submit" class="w-full bg-blue-600 text-white py-2 rounded">Submit Order</button>
     </form>
 
     <div class="text-center mt-6">
-      <a href="https://wa.me/971557068949" target="_blank" class="inline-block bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600">
-        Contact via WhatsApp
-      </a>
+      <a id="whatsapp" href="#" class="bg-green-500 text-white px-4 py-2 rounded">Contact via WhatsApp</a>
     </div>
   </div>
 
   <script>
-    function addProductFields() {
-      const container = document.getElementById('products');
-      const index = container.children.length;
-      const div = document.createElement('div');
-      div.className = "border border-gray-300 p-4 rounded mb-4 bg-gray-50";
+    const translations = {{}};
+    let currentLang = "en";
 
-      const title = document.createElement('h4');
-      title.className = "font-semibold mb-2";
-      title.textContent = "Product " + (index + 1);
-      div.appendChild(title);
+    async function loadLang(lang) {{
+      const res = await fetch(`lang/${{lang}}.json`);
+      translations[lang] = await res.json();
+      applyLang(lang);
+    }}
 
-      const typeLabel = document.createElement('label');
-      typeLabel.className = "block text-gray-700";
-      typeLabel.textContent = "Product Type";
-      div.appendChild(typeLabel);
+    function applyLang(lang) {{
+      const t = translations[lang];
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("label-name").textContent = t.name;
+      document.getElementById("label-phone").textContent = t.phone;
+      document.getElementById("label-country").textContent = t.country;
+      document.getElementById("label-upload").textContent = t.upload;
+      document.getElementById("submit").textContent = t.submit;
+      document.getElementById("whatsapp").textContent = t.whatsapp;
+    }}
 
-      const typeInput = document.createElement('input');
-      typeInput.name = "product[]";
-      typeInput.className = "w-full border border-gray-300 rounded p-2 mb-2";
-      div.appendChild(typeInput);
+    document.getElementById("language").addEventListener("change", (e) => {{
+      currentLang = e.target.value;
+      if (translations[currentLang]) {{
+        applyLang(currentLang);
+      }} else {{
+        loadLang(currentLang);
+      }}
+    }});
 
-      const weightLabel = document.createElement('label');
-      weightLabel.className = "block text-gray-700";
-      weightLabel.textContent = "Weight / Quantity";
-      div.appendChild(weightLabel);
-
-      const weightInput = document.createElement('input');
-      weightInput.name = "weight[]";
-      weightInput.type = "number";
-      weightInput.className = "w-full border border-gray-300 rounded p-2 mb-2";
-      div.appendChild(weightInput);
-
-      const descLabel = document.createElement('label');
-      descLabel.className = "block text-gray-700";
-      descLabel.textContent = "Description";
-      div.appendChild(descLabel);
-
-      const descArea = document.createElement('textarea');
-      descArea.name = "description[]";
-      descArea.rows = 2;
-      descArea.className = "w-full border border-gray-300 rounded p-2 mb-2";
-      div.appendChild(descArea);
-
-      container.appendChild(div);
-    }
+    loadLang("en");
   </script>
 </body>
 </html>
