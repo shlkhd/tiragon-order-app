@@ -1,4 +1,3 @@
-
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
@@ -9,10 +8,13 @@ const fs = require("fs");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// اطمینان از وجود پوشه uploads
 if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
 
+// خواندن اطلاعات فرم
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 const storage = multer.diskStorage({
@@ -41,9 +43,23 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
     worksheet.addRow({ field: "Name", value: name });
     worksheet.addRow({ field: "Phone", value: phone });
     worksheet.addRow({ field: "Country", value: country });
-    worksheet.addRow({ field: "Product", value: product });
-    worksheet.addRow({ field: "Weight", value: weight });
-    worksheet.addRow({ field: "Description", value: description });
+    worksheet.addRow({ field: "", value: "" });
+    worksheet.addRow({ field: "Products", value: "" });
+
+    // چندمحصولی
+    if (Array.isArray(product)) {
+      for (let i = 0; i < product.length; i++) {
+        worksheet.addRow({
+          field: `Product ${i + 1}`,
+          value: `${product[i]} - ${weight[i]} - ${description[i]}`
+        });
+      }
+    } else {
+      worksheet.addRow({
+        field: "Product 1",
+        value: `${product} - ${weight} - ${description}`
+      });
+    }
 
     const excelPath = "uploads/order-" + Date.now() + ".xlsx";
     await workbook.xlsx.writeFile(excelPath);
@@ -51,7 +67,7 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-       user: process.env.soheildaad@gmail.com,
+             user: process.env.soheildaad@gmail.com,
         pass: process.env.orps izxb anuc ynje
       }
     });
@@ -76,5 +92,5 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`✅ Server running at http://localhost:${PORT}`);
 });
