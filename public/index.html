@@ -6,25 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tiragon Order Form</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    function addProductFields() {
-      const container = document.getElementById('products');
-      const index = container.children.length;
-      const div = document.createElement('div');
-      div.className = "border border-gray-300 p-4 rounded mb-4 bg-gray-50";
-
-      div.innerHTML = `
-        <h4 class="font-semibold mb-2">Product $${index + 1}</h4>
-        <label class="block text-gray-700">Product Type</label>
-        <input type="text" name="product[]" class="w-full border border-gray-300 rounded p-2 mb-2" />
-        <label class="block text-gray-700">Weight / Quantity</label>
-        <input type="number" name="weight[]" class="w-full border border-gray-300 rounded p-2 mb-2" />
-        <label class="block text-gray-700">Description</label>
-        <textarea name="description[]" rows="2" class="w-full border border-gray-300 rounded p-2 mb-2"></textarea>
-      `;
-      container.appendChild(div);
-    }
-  </script>
 </head>
 <body class="bg-gray-100 font-sans">
   <div class="max-w-3xl mx-auto p-6 bg-white shadow-xl mt-10 rounded-xl">
@@ -66,5 +47,53 @@
       </a>
     </div>
   </div>
+
+  <script>
+    function addProductFields() {
+      const container = document.getElementById('products');
+      const index = container.children.length;
+      const div = document.createElement('div');
+      div.className = "border border-gray-300 p-4 rounded mb-4 bg-gray-50";
+
+      const title = document.createElement('h4');
+      title.className = "font-semibold mb-2";
+      title.textContent = "Product " + (index + 1);
+      div.appendChild(title);
+
+      const typeLabel = document.createElement('label');
+      typeLabel.className = "block text-gray-700";
+      typeLabel.textContent = "Product Type";
+      div.appendChild(typeLabel);
+
+      const typeInput = document.createElement('input');
+      typeInput.name = "product[]";
+      typeInput.className = "w-full border border-gray-300 rounded p-2 mb-2";
+      div.appendChild(typeInput);
+
+      const weightLabel = document.createElement('label');
+      weightLabel.className = "block text-gray-700";
+      weightLabel.textContent = "Weight / Quantity";
+      div.appendChild(weightLabel);
+
+      const weightInput = document.createElement('input');
+      weightInput.name = "weight[]";
+      weightInput.type = "number";
+      weightInput.className = "w-full border border-gray-300 rounded p-2 mb-2";
+      div.appendChild(weightInput);
+
+      const descLabel = document.createElement('label');
+      descLabel.className = "block text-gray-700";
+      descLabel.textContent = "Description";
+      div.appendChild(descLabel);
+
+      const descArea = document.createElement('textarea');
+      descArea.name = "description[]";
+      descArea.rows = 2;
+      descArea.className = "w-full border border-gray-300 rounded p-2 mb-2";
+      div.appendChild(descArea);
+
+      container.appendChild(div);
+    }
+  </script>
 </body>
 </html>
