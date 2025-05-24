@@ -3,49 +3,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Order</title>
+  <title>Order Form</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
   <div class="max-w-3xl mx-auto p-6 bg-white shadow-xl mt-10 rounded-xl">
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex justify-between items-center mb-6">
       <h1 id="title" class="text-2xl font-bold text-gray-800">Order Submission Form</h1>
-      
-<select id="language" class="border border-gray-300 rounded p-2">
-  <option value="en">English</option>
-  <option value="fa">فارسی</option>
-  <option value="ar">العربية</option>
-  <option value="zh">中文</option>
-  <option value="hi">हिन्दी</option>
-</select>
+      <select id="language" class="border border-gray-300 rounded p-2">
+        <option value="en">English</option>
+        <option value="fa">فارسی</option>
+        <option value="ar">العربية</option>
+        <option value="zh">中文</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+    </div>
 
-    </div>
-    <div class="flex justify-center gap-6 text-blue-600 font-semibold mb-4">
-      <a href="order.html" id="nav_order" class="hover:underline">📦 Order</a>
-      
-    </div>
     <form id="order-form" class="space-y-4">
-      <div><label id="label-name" class="block">Full Name</label><input class="w-full border rounded p-2" /></div>
-      <div><label id="label-phone" class="block">Phone</label><input class="w-full border rounded p-2" /></div>
-      <div><label id="label-country" class="block">Country</label><input class="w-full border rounded p-2" /></div>
+      <div><label id="label-name" class="block">Full Name</label><input class="w-full border border-gray-300 rounded p-2" /></div>
+      <div><label id="label-phone" class="block">Phone</label><input class="w-full border border-gray-300 rounded p-2" /></div>
+      <div><label id="label-country" class="block">Country</label><input class="w-full border border-gray-300 rounded p-2" /></div>
+
       <div id="products"></div>
-      <button type="button" id="addProduct" class="bg-green-500 text-white px-4 py-2 rounded">+ Add Product</button>
-      <div><label id="label-upload" class="block">Upload</label><input type="file" class="w-full" /></div>
+      <button type="button" id="addProduct" onclick="addProductFields()" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+        + Add Product
+      </button>
+
+      <div><label id="label-upload" class="block">Upload File</label><input type="file" class="w-full" /></div>
       <button id="submit" type="submit" class="w-full bg-blue-600 text-white py-2 rounded">Submit Order</button>
     </form>
+
     <div class="text-center mt-6">
       <a id="whatsapp" href="https://wa.me/971557068949" class="bg-green-500 text-white px-4 py-2 rounded">Contact via WhatsApp</a>
     </div>
   </div>
+
 <script>
 const translations = {};
 let currentLang = "en";
+
 async function loadLang(lang) {
   const res = await fetch("lang/" + lang + ".json");
   translations[lang] = await res.json();
   applyLang(lang);
 }
+
 function applyLang(lang) {
   const t = translations[lang];
   document.getElementById("title").textContent = t.title_order;
@@ -56,35 +59,40 @@ function applyLang(lang) {
   document.getElementById("submit").textContent = t.submit_order;
   document.getElementById("addProduct").textContent = t.addProduct;
   document.getElementById("whatsapp").textContent = t.whatsapp;
-  document.getElementById("nav_order").textContent = t.nav_order;
-  document.getElementById("nav_transport").textContent = t.nav_transport;
+
   document.querySelectorAll(".product-label").forEach((el, i) => el.textContent = t.product + " " + (i+1));
   document.querySelectorAll(".label-type").forEach(el => el.textContent = t.productType);
   document.querySelectorAll(".label-weight").forEach(el => el.textContent = t.weight);
   document.querySelectorAll(".label-desc").forEach(el => el.textContent = t.description);
 }
+
 function addProductFields() {
   const container = document.getElementById("products");
   const index = container.children.length;
   const div = document.createElement("div");
-  div.className = "border p-3 rounded bg-gray-50 mb-2";
+  div.className = "border border-gray-300 p-4 rounded mb-4 bg-gray-50";
   div.innerHTML = `
-    <h4 class="product-label font-semibold mb-1">Product ${index + 1}</h4>
-    <label class="label-type block">Product Type</label>
-    <input name="product[]" class="w-full border rounded p-2 mb-2" />
-    <label class="label-weight block">Weight</label>
-    <input name="weight[]" type="number" class="w-full border rounded p-2 mb-2" />
-    <label class="label-desc block">Description</label>
-    <textarea name="description[]" class="w-full border rounded p-2 mb-2"></textarea>
+    <h4 class="product-label font-semibold mb-2">Product ${index + 1}</h4>
+    <label class="label-type block text-gray-700">Product Type</label>
+    <input type="text" name="product[]" class="w-full border border-gray-300 rounded p-2 mb-2" />
+    <label class="label-weight block text-gray-700">Weight / Quantity</label>
+    <input type="number" name="weight[]" class="w-full border border-gray-300 rounded p-2 mb-2" />
+    <label class="label-desc block text-gray-700">Description</label>
+    <textarea name="description[]" rows="2" class="w-full border border-gray-300 rounded p-2 mb-2"></textarea>
   `;
   container.appendChild(div);
   applyLang(currentLang);
 }
+
 document.getElementById("language").addEventListener("change", e => {
   currentLang = e.target.value;
-  if (translations[currentLang]) applyLang(currentLang);
-  else loadLang(currentLang);
+  if (translations[currentLang]) {
+    applyLang(currentLang);
+  } else {
+    loadLang(currentLang);
+  }
 });
+
 loadLang("en");
 </script>
 </body>
