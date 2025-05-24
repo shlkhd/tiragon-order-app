@@ -4,8 +4,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tiragon Order Form</title>
+  <title>Multi-Product Order Form</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function addProductFields() {
+      const container = document.getElementById('products');
+      const index = container.children.length;
+      const div = document.createElement('div');
+      div.className = "border border-gray-300 p-4 rounded mb-4";
+
+      div.innerHTML = `
+        <h4 class="font-semibold mb-2">Product ${index + 1}</h4>
+        <label class="block text-gray-700">Product Type</label>
+        <input type="text" name="product[]" class="w-full border border-gray-300 rounded p-2 mb-2" />
+        <label class="block text-gray-700">Weight / Quantity</label>
+        <input type="number" name="weight[]" class="w-full border border-gray-300 rounded p-2 mb-2" />
+        <label class="block text-gray-700">Description</label>
+        <textarea name="description[]" rows="2" class="w-full border border-gray-300 rounded p-2 mb-2"></textarea>
+      `;
+      container.appendChild(div);
+    }
+  </script>
 </head>
 <body class="bg-gray-100 font-sans">
   <div class="max-w-2xl mx-auto p-6 bg-white shadow-lg mt-10 rounded-xl">
@@ -23,18 +42,12 @@
         <label class="block text-gray-700">Country / City</label>
         <input type="text" name="country" class="w-full border border-gray-300 rounded p-2" />
       </div>
-      <div>
-        <label class="block text-gray-700">Product Type</label>
-        <input type="text" name="product" class="w-full border border-gray-300 rounded p-2" />
-      </div>
-      <div>
-        <label class="block text-gray-700">Weight / Quantity</label>
-        <input type="number" name="weight" class="w-full border border-gray-300 rounded p-2" />
-      </div>
-      <div>
-        <label class="block text-gray-700">Additional Description</label>
-        <textarea name="description" rows="4" class="w-full border border-gray-300 rounded p-2"></textarea>
-      </div>
+
+      <div id="products"></div>
+      <button type="button" onclick="addProductFields()" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded mb-4">
+        + Add Product
+      </button>
+
       <div>
         <label class="block text-gray-700">Upload File (Catalog / Image)</label>
         <input type="file" name="attachment" class="w-full" />
@@ -43,11 +56,6 @@
         Submit Order
       </button>
     </form>
-    <div class="text-center mt-6">
-      <a href="https://wa.me/" target="_blank" class="inline-block bg-green-500 text-white px-4 py-2 rounded shadow hover:bg-green-600">
-        Contact via WhatsApp
-      </a>
-    </div>
   </div>
 </body>
 </html>
