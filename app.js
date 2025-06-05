@@ -72,7 +72,7 @@ app.post("/submit", upload.single("attachment"), async (req, res) => {
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_TO,
+      to: process.env.EMAIL_TO.split(","),
       subject: "New Order Received",
       text: "Please find the attached order file.",
       attachments: [
